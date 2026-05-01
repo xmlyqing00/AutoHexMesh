@@ -1,6 +1,3 @@
-[submodule "evocube"]
-	path = evocube
-	url = https://github.com/xmlyqing00/evocube.git
 [submodule "interactive-hex-meshing"]
 	path = interactive-hex-meshing
 	url = https://github.com/lingxiaoli94/interactive-hex-meshing.git

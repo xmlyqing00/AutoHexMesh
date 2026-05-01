@@ -7,6 +7,7 @@ sudo docker run \
 -it \
 --env="DISPLAY=$DISPLAY" \
 --env="NVIDIA_DRIVER_CAPABILITIES=all" \
+--env="NVIDIA_VISIBLE_DEVICES=0" \
 -v /tmp/.X11-unix:/tmp/.X11-unix:rw \
 -v /usr/share/vulkan:/usr/share/vulkan:ro \
 -v $(pwd)/lib:/space/lib \
