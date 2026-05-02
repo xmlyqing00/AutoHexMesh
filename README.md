@@ -93,10 +93,62 @@ cd /space/evocube/build
 
 ### 2 Convert the polycube to cubes (HDF5 format)
 In the container
-```python3
+```bash
 cd /space/evocube/
 python3 build_hdf5.py --dir /space/output/examples/toy_plane
 ```
+
+#### 2.1 build_hdf5_solid_vis.py (Alternative with Solid Voxelization)
+
+This script provides an enhanced HDF5 generation pipeline with solid voxelization and greedy cuboid merging. It uses flood-fill to create watertight solid voxels and then merges them into larger cuboids to reduce complexity.
+
+**Required Input Files** (in the specified directory):
+- `fast_polycube_surf.obj` - Polycube surface mesh
+- `tetra.mesh` - Tetrahedral mesh
+
+**Output Files**:
+- `evocube.hdf5` - HDF5 file containing normalized tet mesh and merged cuboid parameters
+- `cuboids_view_merged.vtu` - VTU visualization of merged cuboids (for ParaView)
+- `cuboids_view_raw.vtu` - VTU visualization of raw voxels before merging
+
+**Usage**:
+```bash
+cd /space/evocube/
+python3 build_hdf5_solid_vis.py --dir /space/output/examples/toy_plane --res 0.1
+```
+
+**Arguments**:
+- `--dir` (required): Input/output directory containing the required mesh files
+- `--res` (optional, default=0.1): Voxelization resolution (smaller values = finer voxels)
+
+#### 2.2 vis_labeling.py (Labeling Visualization)
+
+This script visualizes the labeling results by coloring each triangle face according to its assigned axis direction. The output is a PLY file that can be viewed in MeshLab or other 3D viewers.
+
+**Color Mapping**:
+| Label | Direction | Color   |
+|-------|-----------|---------|
+| 0     | +X        | Red     |
+| 1     | -X        | Cyan    |
+| 2     | +Y        | Green   |
+| 3     | -Y        | Magenta |
+| 4     | +Z        | Blue    |
+| 5     | -Z        | Yellow  |
+
+**Required Input Files** (in the specified directory):
+- `boundary.obj` - Triangle surface mesh
+- `labeling.txt` - Text file with one label (0-5) per face
+
+**Output File**:
+- `labeled_mesh.ply` - Colored PLY mesh for visualization
+
+**Usage**:
+```bash
+cd /space/evocube/
+python3 vis_labeling.py --dir /space/output/examples/toy_plane
+```
+
+The generated `labeled_mesh.ply` can be opened directly in MeshLab to inspect the labeling quality.
 
 ### 3 Run the interactive-hex-meshing
 In the container
